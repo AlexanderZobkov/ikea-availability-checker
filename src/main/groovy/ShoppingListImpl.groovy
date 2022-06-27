@@ -56,6 +56,8 @@ class ShoppingListImpl implements ShoppingList {
                         Stock.Availability availability = stock.whereAvailable[shopTuple.v1]
                         availability.stock
                     }
+                } else {
+                    it.availability = [''] * shops.size()
                 }
                 printer.printRecord(it.getRecord())
             }
