@@ -1,5 +1,6 @@
 plugins {
     id 'groovy'
+    id 'ru.vyarus.quality' version '4.7.0'
 }
 
 group 'org.example'
@@ -19,4 +20,9 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+quality {
+    consoleReporting = true
+    strict = false
 }
