@@ -1,8 +1,10 @@
 import groovy.json.JsonSlurper
+import groovy.transform.CompileDynamic
 
 /**
  * Product availability checker based on https://github.com/Ephigenia/ikea-availability-checker.
  */
+@CompileDynamic
 class JSProductAvailabilityChecker implements ProductAvailabilityChecker {
 
     String ikeaAvailabilityCheckerTool = 'npx ikea-availability-checker@2.0.0-alpha.3'

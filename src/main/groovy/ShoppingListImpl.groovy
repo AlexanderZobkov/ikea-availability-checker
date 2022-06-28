@@ -1,3 +1,4 @@
+import groovy.transform.CompileDynamic
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVParser
 import org.apache.commons.csv.CSVPrinter
@@ -5,6 +6,7 @@ import org.apache.commons.csv.CSVRecord
 
 import java.nio.charset.StandardCharsets
 
+@CompileDynamic
 class ShoppingListImpl implements ShoppingList {
 
     private List<CSVRecord> records
@@ -49,17 +51,17 @@ class ShoppingListImpl implements ShoppingList {
                 .setHeader(*headers)
                 .build()
         try (CSVPrinter printer = new CSVPrinter(new OutputStreamWriter(os, StandardCharsets.UTF_8), csvFormat)) {
-            shoppingItems.each { Item it ->
-                if (it.productId && it.productId[0].isNumber()) {
-                    it.availability = shops.collect { shopTuple ->
-                        Stock stock = stocks[it.productId.replace('.', '')]
+            shoppingItems.each { Item item ->
+                if (item.productId && item.productId[0].isNumber()) {
+                    item.availability = shops.collect { shopTuple ->
+                        Stock stock = stocks[item.productId.replace('.', '')]
                         Stock.Availability availability = stock.whereAvailable[shopTuple.v1]
                         availability.stock
                     }
                 } else {
-                    it.availability = [''] * shops.size()
+                    item.availability = [''] * shops.size()
                 }
-                printer.printRecord(it.getRecord())
+                printer.printRecord(item.getRecord())
             }
         } catch (IOException e) {
             throw new IllegalArgumentException(e)
