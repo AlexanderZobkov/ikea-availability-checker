@@ -1,6 +1,9 @@
 import groovy.json.JsonSlurper
 
-class ProductAvailabilityCheckerImpl implements ProductAvailabilityChecker {
+/**
+ * Product availability checker based on https://github.com/Ephigenia/ikea-availability-checker.
+ */
+class JSProductAvailabilityChecker implements ProductAvailabilityChecker {
 
     String ikeaAvailabilityCheckerTool = 'npx ikea-availability-checker@2.0.0-alpha.3'
 

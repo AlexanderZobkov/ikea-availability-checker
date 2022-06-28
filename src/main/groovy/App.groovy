@@ -18,7 +18,7 @@ class App {
         ShoppingList shoppingList = new ShoppingListImpl()
         InputStream is = Files.newInputStream(Paths.get(shoppingListCsvFile))
         shoppingList.load(is)
-        ProductAvailabilityChecker availabilityChecker = new ProductAvailabilityCheckerImpl()
+        ProductAvailabilityChecker availabilityChecker = new JSProductAvailabilityChecker()
         List<String> productIds = shoppingList.extractProductIds()
         Map<String, Stock> stocks = availabilityChecker.checkStocks(productIds, storesId)
         OutputStream os = Files.newOutputStream(Paths.get(shoppingListCsvFile + '-report-' + Instant.now() + '.csv'))
