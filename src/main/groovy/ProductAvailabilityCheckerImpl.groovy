@@ -11,7 +11,10 @@ class ProductAvailabilityCheckerImpl implements ProductAvailabilityChecker {
                 "--store ${storesId.join(',')} " +
                 '--json ' +
                 productIds.join(' ')
+        // TODO Add logging like: log.log(Level.SEVERE, "Executing {0}", productAvailabilityCmd)
+        // TODO: Handle tool exit with non-zero code.
         String productsAvailabilityJson = productAvailabilityCmd.execute().text
+        // TODO Add logging like: log.log(Level.SEVERE, "Result {0}", productsAvailabilityJson)
         List<Map<String, Object>> productsAvailability = new JsonSlurper().parseText(productsAvailabilityJson)
         return productsAvailability.collect { jsonProduct ->
             [product  : jsonProduct.productId,
