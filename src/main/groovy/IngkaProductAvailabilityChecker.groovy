@@ -18,6 +18,9 @@ class IngkaProductAvailabilityChecker implements ProductAvailabilityChecker {
     private final Map<String, String> storesIdToName = ['344': 'Белая Дача',
                                                         '336': 'Теплый Стан',
                                                         '335': 'Химки',
+                                                        //'616': 'ИКЕА Сити в ТРЦ Мозаика',
+                                                        //'609' : 'ИКЕА Сити в ТРЦ АВИАПАРК',
+                                                        //'643' : 'ИКЕА Сити в ТРК Европолис'
     ]
 
     @Override

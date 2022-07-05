@@ -9,7 +9,10 @@ class App {
 
     static List<String> storesId = ['344', // Белая Дача
                                     '336', // Теплый Стан
-                                    '335', //Химки
+                                    '335', // Химки
+                                    //'616', // ИКЕА Сити в ТРЦ Мозаика
+                                    //'609', // ИКЕА Сити в ТРЦ АВИАПАРК
+                                    //'643', // ИКЕА Сити в ТРК Европолис
     ]
 
     static String shoppingListCsvFile = './final-ever-sale-shopping-list.csv'
