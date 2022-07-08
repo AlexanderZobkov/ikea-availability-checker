@@ -25,12 +25,12 @@ class ShoppingListImpl implements ShoppingList {
             record.get(1) &&
                     record.get(1)[1].isInteger()
         }.collect { CSVRecord record ->
-            record.get(1).replace('.', '')
+            sanitize(record.get(1))
         }.unique()
     }
 
     @Override
-    void dumpAvailabilityReport(Map<String, Stock> stocks, OutputStream os) {
+    void dumpAvailabilityReport(Map<String, Stock> stocks, Map<String, String> storeIds, OutputStream os) {
         List<Item> shoppingItems = records.drop(1).collect {
             new Item(product: it.get(0),
                     productId: it.get(1),
@@ -40,9 +40,9 @@ class ShoppingListImpl implements ShoppingList {
             )
         }
 
-        List<Tuple2<String, String>> shops = stocks.values().collect { Stock stock ->
-            stock.whereAvailable.values().collect { new Tuple2<String, String>(it.storeId, it.storeName) }
-        }.unique().first()
+        List<Tuple2<String, String>> shops = storeIds.collect { storeId, storeName ->
+             new Tuple2<String, String>(storeId, storeName)
+        }
 
         List<String> shopNames = shops.collect { it.v2 }
 
@@ -54,7 +54,7 @@ class ShoppingListImpl implements ShoppingList {
             shoppingItems.each { Item item ->
                 if (item.productId && item.productId[0].isNumber()) {
                     item.availability = shops.collect { shopTuple ->
-                        Stock stock = stocks[item.productId.replace('.', '')]
+                        Stock stock = stocks[sanitize(item.productId)]
                         Stock.Availability availability = stock.whereAvailable[shopTuple.v1]
                         availability.stock
                     }
@@ -66,6 +66,10 @@ class ShoppingListImpl implements ShoppingList {
         } catch (IOException e) {
             throw new IllegalArgumentException(e)
         }
+    }
+
+    private String sanitize(String productId){
+        productId.replace('.', '')
     }
 
     static private class Item {

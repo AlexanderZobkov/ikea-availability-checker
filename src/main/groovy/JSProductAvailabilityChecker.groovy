@@ -24,7 +24,6 @@ class JSProductAvailabilityChecker implements ProductAvailabilityChecker {
         return productsAvailability.collect { jsonProduct ->
             [product  : jsonProduct.productId,
              storeId  : jsonProduct.availability.store.buCode,
-             storeName: jsonProduct.availability.store.name,
              stock    : jsonProduct.availability.stock,
             ]
         }
@@ -34,7 +33,6 @@ class JSProductAvailabilityChecker implements ProductAvailabilityChecker {
                             tmpAvailability.collectEntries { tmpGroupedAvailability ->
                                 Stock.Availability availability =
                                         new Stock.Availability(stock: tmpGroupedAvailability.stock,
-                                                storeName: tmpGroupedAvailability.storeName,
                                                 storeId: tmpGroupedAvailability.storeId
                                         )
                                 [(tmpGroupedAvailability.storeId): availability]

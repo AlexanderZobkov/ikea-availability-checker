@@ -8,7 +8,6 @@ class Stock {
 
     static class Availability {
         String storeId
-        String storeName
         Integer stock
     }
 

@@ -7,5 +7,5 @@ interface ShoppingList {
 
     List<String> extractProductIds()
 
-    void dumpAvailabilityReport(Map<String, Stock> stocks, OutputStream os)
+    void dumpAvailabilityReport(Map<String, Stock> stocks, Map<String, String> storeIds, OutputStream os)
 }

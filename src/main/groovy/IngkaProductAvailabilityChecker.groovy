@@ -15,13 +15,6 @@ class IngkaProductAvailabilityChecker implements ProductAvailabilityChecker {
                                                  'X-Client-Id': 'b6c117e5-ae61-4ef5-b4cc-e0b1e37f0631',
     ]
 
-    private final Map<String, String> storesIdToName = ['344': 'Белая Дача',
-                                                        '336': 'Теплый Стан',
-                                                        '335': 'Химки',
-                                                        //'616': 'ИКЕА Сити в ТРЦ Мозаика',
-                                                        //'609' : 'ИКЕА Сити в ТРЦ АВИАПАРК',
-                                                        //'643' : 'ИКЕА Сити в ТРК Европолис'
-    ]
 
     @Override
     Map<String, Stock> checkStocks(List<String> productIds, List<String> stores) {
@@ -43,7 +36,6 @@ class IngkaProductAvailabilityChecker implements ProductAvailabilityChecker {
         }.collect { availability ->
             [product  : availability.itemKey.itemNo,
              storeId  : availability.classUnitKey.classUnitCode,
-             storeName: storesIdToName[availability.classUnitKey.classUnitCode],
              stock    : availability.buyingOption.cashCarry?.availability?.quantity ?: 0,
             ]
         }.groupBy { it.product }
@@ -52,7 +44,6 @@ class IngkaProductAvailabilityChecker implements ProductAvailabilityChecker {
                             tmpAvailability.collectEntries { tmpGroupedAvailability ->
                                 Stock.Availability availability =
                                         new Stock.Availability(stock: tmpGroupedAvailability.stock,
-                                                storeName: tmpGroupedAvailability.storeName,
                                                 storeId: tmpGroupedAvailability.storeId
                                         )
                                 [(tmpGroupedAvailability.storeId): availability]
